@@ -264,7 +264,9 @@ class CompactPriceDisplay extends StatelessWidget {
       children: [
         Text(
           '${_formatCurrency(price)}',
-          style: TradingTextStyles.priceMedium(),
+          style: Theme.of(
+            context,
+          ).textTheme.titleSmall?.copyWith(fontWeight: FontWeight.bold),
         ),
         if (change != null || changePercent != null) ...[
           const SizedBox(width: TradingSizes.sm),
@@ -276,8 +278,8 @@ class CompactPriceDisplay extends StatelessWidget {
           const SizedBox(width: TradingSizes.xs),
           Text(
             changeText,
-            style: TradingTextStyles.bodySmall().copyWith(
-              color: isPositive ? TradingColors.profit : TradingColors.loss,
+            style: Theme.of(context).textTheme.bodySmall?.copyWith(
+              color: isPositive ? Colors.green : Colors.red,
               fontWeight: FontWeight.w600,
             ),
           ),
@@ -285,8 +287,8 @@ class CompactPriceDisplay extends StatelessWidget {
             const SizedBox(width: TradingSizes.xs),
             Text(
               '($percentText)',
-              style: TradingTextStyles.bodySmall().copyWith(
-                color: isPositive ? TradingColors.profit : TradingColors.loss,
+              style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                color: isPositive ? Colors.green : Colors.red,
                 fontWeight: FontWeight.w600,
               ),
             ),

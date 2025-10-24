@@ -119,66 +119,81 @@ class PortfolioSummary extends StatelessWidget {
   }
 
   Widget _buildMainValue() {
-    return Row(
-      children: [
-        Text('Portfolio Value', style: TradingTextStyles.titleMedium()),
-        const Spacer(),
-        Text(
-          '\$${totalValue.toStringAsFixed(2)}',
-          style: TradingTextStyles.priceLarge(),
-        ),
-      ],
+    return Builder(
+      builder: (context) => Row(
+        children: [
+          Text(
+            'Portfolio Value',
+            style: Theme.of(
+              context,
+            ).textTheme.bodyMedium?.copyWith(fontWeight: FontWeight.w500),
+          ),
+          const Spacer(),
+          Text(
+            '\$${totalValue.toStringAsFixed(2)}',
+            style: Theme.of(
+              context,
+            ).textTheme.titleLarge?.copyWith(fontWeight: FontWeight.bold),
+          ),
+        ],
+      ),
     );
   }
 
   Widget _buildChangeIndicator(bool isPositive) {
-    return Row(
-      children: [
-        Icon(
-          isPositive ? Icons.trending_up : Icons.trending_down,
-          size: TradingSizes.iconSm,
-          color: isPositive ? TradingColors.profit : TradingColors.loss,
-        ),
-        const SizedBox(width: TradingSizes.xs),
-        Text(
-          '${isPositive ? '+' : ''}\$${totalChange.toStringAsFixed(2)}',
-          style: TradingTextStyles.bodyMedium(
+    return Builder(
+      builder: (context) => Row(
+        children: [
+          Icon(
+            isPositive ? Icons.trending_up : Icons.trending_down,
+            size: TradingSizes.iconSm,
             color: isPositive ? TradingColors.profit : TradingColors.loss,
           ),
-        ),
-        const SizedBox(width: TradingSizes.sm),
-        Text(
-          '(${isPositive ? '+' : ''}${totalChangePercent.toStringAsFixed(2)}%)',
-          style: TradingTextStyles.bodyMedium(
-            color: isPositive ? TradingColors.profit : TradingColors.loss,
+          const SizedBox(width: TradingSizes.xs),
+          Text(
+            '${isPositive ? '+' : ''}\$${totalChange.toStringAsFixed(2)}',
+            style: Theme.of(context).textTheme.bodySmall?.copyWith(
+              color: isPositive ? Colors.green : Colors.red,
+              fontWeight: FontWeight.w500,
+            ),
           ),
-        ),
-      ],
+          const SizedBox(width: TradingSizes.sm),
+          Text(
+            '(${isPositive ? '+' : ''}${totalChangePercent.toStringAsFixed(2)}%)',
+            style: Theme.of(context).textTheme.bodySmall?.copyWith(
+              color: isPositive ? Colors.green : Colors.red,
+              fontWeight: FontWeight.w500,
+            ),
+          ),
+        ],
+      ),
     );
   }
 
   Widget _buildAdditionalMetrics() {
-    return Row(
-      children: [
-        if (availableBalance != null) ...[
-          Expanded(
-            child: _buildMetric(
-              'Available',
-              '\$${availableBalance!.toStringAsFixed(2)}',
-              TradingColors.textSecondary,
+    return Builder(
+      builder: (context) => Row(
+        children: [
+          if (availableBalance != null) ...[
+            Expanded(
+              child: _buildMetric(
+                'Available',
+                '\$${availableBalance!.toStringAsFixed(2)}',
+                Theme.of(context).colorScheme.onSurface.withOpacity(0.7),
+              ),
             ),
-          ),
-          const SizedBox(width: TradingSizes.md),
+            const SizedBox(width: TradingSizes.md),
+          ],
+          if (investedAmount != null)
+            Expanded(
+              child: _buildMetric(
+                'Invested',
+                '\$${investedAmount!.toStringAsFixed(2)}',
+                Theme.of(context).colorScheme.onSurface.withOpacity(0.7),
+              ),
+            ),
         ],
-        if (investedAmount != null)
-          Expanded(
-            child: _buildMetric(
-              'Invested',
-              '\$${investedAmount!.toStringAsFixed(2)}',
-              TradingColors.textSecondary,
-            ),
-          ),
-      ],
+      ),
     );
   }
 
@@ -206,13 +221,26 @@ class PortfolioSummary extends StatelessWidget {
   }
 
   Widget _buildMetric(String label, String value, Color color) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(label, style: TradingTextStyles.caption(color: color)),
-        const SizedBox(height: TradingSizes.xs),
-        Text(value, style: TradingTextStyles.bodyMedium()),
-      ],
+    return Builder(
+      builder: (context) => Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            label,
+            style: Theme.of(context).textTheme.bodySmall?.copyWith(
+              color: color,
+              fontWeight: FontWeight.w500,
+            ),
+          ),
+          const SizedBox(height: TradingSizes.xs),
+          Text(
+            value,
+            style: Theme.of(
+              context,
+            ).textTheme.bodyMedium?.copyWith(fontWeight: FontWeight.w600),
+          ),
+        ],
+      ),
     );
   }
 }

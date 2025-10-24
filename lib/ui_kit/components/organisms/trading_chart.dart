@@ -46,10 +46,10 @@ class _TradingChartState extends State<TradingChart> {
       height: widget.height,
       padding: const EdgeInsets.all(TradingSizes.md),
       decoration: BoxDecoration(
-        color: TradingColors.surface,
+        color: Theme.of(context).cardColor,
         borderRadius: BorderRadius.circular(TradingSizes.radiusMd),
         border: widget.showBorders
-            ? Border.all(color: TradingColors.border)
+            ? Border.all(color: Theme.of(context).dividerColor)
             : null,
       ),
       child: Column(
@@ -171,10 +171,16 @@ class _TradingChartState extends State<TradingChart> {
           horizontalInterval: 1,
           verticalInterval: 1,
           getDrawingHorizontalLine: (value) {
-            return FlLine(color: TradingColors.border, strokeWidth: 1);
+            return FlLine(
+              color: Theme.of(context).dividerColor.withOpacity(0.3),
+              strokeWidth: 1,
+            );
           },
           getDrawingVerticalLine: (value) {
-            return FlLine(color: TradingColors.border, strokeWidth: 1);
+            return FlLine(
+              color: Theme.of(context).dividerColor.withOpacity(0.3),
+              strokeWidth: 1,
+            );
           },
         ),
         titlesData: FlTitlesData(
@@ -193,7 +199,11 @@ class _TradingChartState extends State<TradingChart> {
               getTitlesWidget: (value, meta) {
                 return Text(
                   _formatXAxisLabel(value),
-                  style: Theme.of(context).textTheme.bodySmall,
+                  style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                    color: Theme.of(
+                      context,
+                    ).colorScheme.onSurface.withOpacity(0.7),
+                  ),
                 );
               },
             ),
@@ -206,7 +216,11 @@ class _TradingChartState extends State<TradingChart> {
               getTitlesWidget: (value, meta) {
                 return Text(
                   _formatYAxisLabel(value),
-                  style: Theme.of(context).textTheme.bodySmall,
+                  style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                    color: Theme.of(
+                      context,
+                    ).colorScheme.onSurface.withOpacity(0.7),
+                  ),
                 );
               },
             ),
@@ -214,7 +228,7 @@ class _TradingChartState extends State<TradingChart> {
         ),
         borderData: FlBorderData(
           show: widget.showBorders,
-          border: Border.all(color: TradingColors.border),
+          border: Border.all(color: Theme.of(context).dividerColor),
         ),
         minX: 0,
         maxX: widget.data.length.toDouble() - 1,
@@ -224,7 +238,7 @@ class _TradingChartState extends State<TradingChart> {
           LineChartBarData(
             spots: _getLineSpots(),
             isCurved: true,
-            color: TradingColors.primary,
+            color: Theme.of(context).colorScheme.primary,
             barWidth: 2,
             isStrokeCapRound: true,
             dotData: const FlDotData(show: false),

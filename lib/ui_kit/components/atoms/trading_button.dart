@@ -162,7 +162,7 @@ class TradingButton extends StatelessWidget {
   ButtonStyle _getPrimaryStyle() {
     return ElevatedButton.styleFrom(
       backgroundColor: TradingColors.primary,
-      foregroundColor: TradingColors.textPrimary,
+      foregroundColor: Colors.white,
       elevation: 2,
       shadowColor: Colors.black26,
       shape: RoundedRectangleBorder(
@@ -174,7 +174,7 @@ class TradingButton extends StatelessWidget {
 
   ButtonStyle _getSecondaryStyle() {
     return OutlinedButton.styleFrom(
-      foregroundColor: TradingColors.textPrimary,
+      foregroundColor: TradingColors.primary,
       side: const BorderSide(color: TradingColors.border),
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(TradingSizes.radiusSm),
@@ -196,7 +196,7 @@ class TradingButton extends StatelessWidget {
   ButtonStyle _getSuccessStyle() {
     return ElevatedButton.styleFrom(
       backgroundColor: TradingColors.success,
-      foregroundColor: TradingColors.textPrimary,
+      foregroundColor: Colors.white,
       elevation: 2,
       shadowColor: Colors.black26,
       shape: RoundedRectangleBorder(
@@ -209,7 +209,7 @@ class TradingButton extends StatelessWidget {
   ButtonStyle _getDangerStyle() {
     return ElevatedButton.styleFrom(
       backgroundColor: TradingColors.error,
-      foregroundColor: TradingColors.textPrimary,
+      foregroundColor: Colors.white,
       elevation: 2,
       shadowColor: Colors.black26,
       shape: RoundedRectangleBorder(

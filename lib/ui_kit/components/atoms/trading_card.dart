@@ -37,7 +37,7 @@ class TradingCard extends StatelessWidget {
     final cardWidget = Card(
       elevation: elevation ?? _getDefaultElevation(),
       shadowColor: Colors.black26,
-      color: backgroundColor ?? _getDefaultBackgroundColor(),
+      color: backgroundColor ?? _getDefaultBackgroundColor(context),
       shape: RoundedRectangleBorder(
         borderRadius:
             borderRadius ?? BorderRadius.circular(TradingSizes.radiusMd),
@@ -77,14 +77,14 @@ class TradingCard extends StatelessWidget {
     }
   }
 
-  Color _getDefaultBackgroundColor() {
+  Color _getDefaultBackgroundColor(BuildContext context) {
     switch (variant) {
       case TradingCardVariant.defaultCard:
-        return TradingColors.surface;
+        return Theme.of(context).cardColor;
       case TradingCardVariant.elevated:
-        return TradingColors.surface;
+        return Theme.of(context).cardColor;
       case TradingCardVariant.flat:
-        return TradingColors.surface;
+        return Theme.of(context).cardColor;
       case TradingCardVariant.outlined:
         return Colors.transparent;
     }
@@ -257,7 +257,7 @@ class TradingCardWithIcon extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.all(TradingSizes.md),
       decoration: BoxDecoration(
-        color: TradingColors.surfaceLight,
+        color: Theme.of(context).colorScheme.surfaceContainerHighest,
         borderRadius: BorderRadius.only(
           topLeft:
               borderRadius?.topLeft ?? Radius.circular(TradingSizes.radiusMd),
@@ -270,12 +270,13 @@ class TradingCardWithIcon extends StatelessWidget {
           Container(
             padding: const EdgeInsets.all(TradingSizes.sm),
             decoration: BoxDecoration(
-              color: iconBackgroundColor ?? TradingColors.primary,
+              color:
+                  iconBackgroundColor ?? Theme.of(context).colorScheme.primary,
               borderRadius: BorderRadius.circular(TradingSizes.radiusSm),
             ),
             child: Icon(
               icon,
-              color: iconColor ?? TradingColors.textPrimary,
+              color: iconColor ?? Theme.of(context).colorScheme.onPrimary,
               size: TradingSizes.iconMd,
             ),
           ),

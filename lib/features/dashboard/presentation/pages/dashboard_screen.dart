@@ -5,7 +5,6 @@ import '../../../../ui_kit/components/molecules/price_display.dart';
 import '../../../../ui_kit/components/molecules/portfolio_summary.dart';
 import '../../../../ui_kit/components/molecules/order_book.dart';
 import '../../../../ui_kit/components/organisms/trading_chart.dart';
-import '../../../../core/constants/app_colors/trading_colors.dart';
 import '../../../../core/constants/app_sizes/trading_sizes.dart';
 
 /// Dashboard Screen
@@ -20,27 +19,7 @@ class DashboardScreen extends StatefulWidget {
 class _DashboardScreenState extends State<DashboardScreen> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: TradingColors.background,
-      appBar: _buildAppBar(),
-      body: _buildBody(),
-    );
-  }
-
-  PreferredSizeWidget _buildAppBar() {
-    return AppBar(
-      title: const Text('Trading Dashboard'),
-      backgroundColor: TradingColors.surface,
-      foregroundColor: TradingColors.textPrimary,
-      elevation: 0,
-      actions: [
-        IconButton(
-          icon: const Icon(Icons.notifications_outlined),
-          onPressed: () {},
-        ),
-        IconButton(icon: const Icon(Icons.settings_outlined), onPressed: () {}),
-      ],
-    );
+    return Scaffold(body: _buildBody());
   }
 
   Widget _buildBody() {
@@ -63,7 +42,12 @@ class _DashboardScreenState extends State<DashboardScreen> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text('Portfolio', style: Theme.of(context).textTheme.headlineSmall),
+        Text(
+          'Portfolio',
+          style: Theme.of(
+            context,
+          ).textTheme.titleLarge?.copyWith(fontWeight: FontWeight.bold),
+        ),
         const SizedBox(height: TradingSizes.md),
         const PortfolioSummary(
           totalValue: 125430.50,
@@ -122,7 +106,9 @@ class _DashboardScreenState extends State<DashboardScreen> {
       children: [
         Text(
           'Market Overview',
-          style: Theme.of(context).textTheme.headlineSmall,
+          style: Theme.of(
+            context,
+          ).textTheme.titleLarge?.copyWith(fontWeight: FontWeight.bold),
         ),
         const SizedBox(height: TradingSizes.md),
         _buildMarketCards(),
@@ -168,12 +154,15 @@ class _DashboardScreenState extends State<DashboardScreen> {
                   width: 40,
                   height: 40,
                   decoration: BoxDecoration(
-                    color: TradingColors.primary.withOpacity(0.1),
+                    color: _getCryptoIconColor(
+                      data['symbol'] as String,
+                    ).withOpacity(0.1),
                     borderRadius: BorderRadius.circular(TradingSizes.radiusSm),
                   ),
                   child: Icon(
-                    Icons.currency_bitcoin,
-                    color: TradingColors.primary,
+                    _getCryptoIcon(data['symbol'] as String),
+                    color: _getCryptoIconColor(data['symbol'] as String),
+                    size: 20,
                   ),
                 ),
                 const SizedBox(width: TradingSizes.md),
@@ -183,11 +172,17 @@ class _DashboardScreenState extends State<DashboardScreen> {
                     children: [
                       Text(
                         data['symbol'] as String,
-                        style: Theme.of(context).textTheme.titleMedium,
+                        style: Theme.of(context).textTheme.titleSmall?.copyWith(
+                          fontWeight: FontWeight.bold,
+                        ),
                       ),
                       Text(
                         data['name'] as String,
-                        style: Theme.of(context).textTheme.bodySmall,
+                        style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                          color: Theme.of(
+                            context,
+                          ).colorScheme.onSurface.withOpacity(0.7),
+                        ),
                       ),
                     ],
                   ),
@@ -209,7 +204,12 @@ class _DashboardScreenState extends State<DashboardScreen> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text('Trading', style: Theme.of(context).textTheme.headlineSmall),
+        Text(
+          'Trading',
+          style: Theme.of(
+            context,
+          ).textTheme.titleLarge?.copyWith(fontWeight: FontWeight.bold),
+        ),
         const SizedBox(height: TradingSizes.md),
         Row(
           children: [
@@ -293,5 +293,31 @@ class _DashboardScreenState extends State<DashboardScreen> {
     }
 
     return orders;
+  }
+
+  IconData _getCryptoIcon(String symbol) {
+    switch (symbol.toUpperCase()) {
+      case 'BTC':
+        return Icons.currency_bitcoin;
+      case 'ETH':
+        return Icons.currency_exchange;
+      case 'SOL':
+        return Icons.auto_awesome;
+      default:
+        return Icons.currency_bitcoin;
+    }
+  }
+
+  Color _getCryptoIconColor(String symbol) {
+    switch (symbol.toUpperCase()) {
+      case 'BTC':
+        return Colors.orange;
+      case 'ETH':
+        return Colors.blue;
+      case 'SOL':
+        return Colors.purple;
+      default:
+        return Colors.grey;
+    }
   }
 }

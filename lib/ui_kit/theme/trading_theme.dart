@@ -242,6 +242,122 @@ class TradingTheme {
         margin: const EdgeInsets.all(TradingSizes.sm),
       ),
 
+      // Elevated Button Theme for Light Mode
+      elevatedButtonTheme: ElevatedButtonThemeData(
+        style: ElevatedButton.styleFrom(
+          backgroundColor: TradingColors.primary,
+          foregroundColor: Colors.white,
+          elevation: 2,
+          shadowColor: Colors.black26,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(TradingSizes.radiusSm),
+          ),
+          padding: const EdgeInsets.symmetric(
+            horizontal: TradingSizes.lg,
+            vertical: TradingSizes.md,
+          ),
+          textStyle: TradingTextStyles.labelLarge(color: Colors.white),
+        ),
+      ),
+
+      // Outlined Button Theme for Light Mode
+      outlinedButtonTheme: OutlinedButtonThemeData(
+        style: OutlinedButton.styleFrom(
+          foregroundColor: TradingColors.lightText,
+          side: const BorderSide(color: TradingColors.border),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(TradingSizes.radiusSm),
+          ),
+          padding: const EdgeInsets.symmetric(
+            horizontal: TradingSizes.lg,
+            vertical: TradingSizes.md,
+          ),
+          textStyle: TradingTextStyles.labelLarge(
+            color: TradingColors.lightText,
+          ),
+        ),
+      ),
+
+      // Text Button Theme for Light Mode
+      textButtonTheme: TextButtonThemeData(
+        style: TextButton.styleFrom(
+          foregroundColor: TradingColors.primary,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(TradingSizes.radiusSm),
+          ),
+          padding: const EdgeInsets.symmetric(
+            horizontal: TradingSizes.md,
+            vertical: TradingSizes.sm,
+          ),
+          textStyle: TradingTextStyles.labelLarge(color: TradingColors.primary),
+        ),
+      ),
+
+      // Input Decoration Theme for Light Mode
+      inputDecorationTheme: InputDecorationTheme(
+        filled: true,
+        fillColor: TradingColors.lightSurface,
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(TradingSizes.radiusSm),
+          borderSide: const BorderSide(color: TradingColors.border),
+        ),
+        enabledBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(TradingSizes.radiusSm),
+          borderSide: const BorderSide(color: TradingColors.border),
+        ),
+        focusedBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(TradingSizes.radiusSm),
+          borderSide: const BorderSide(color: TradingColors.primary, width: 2),
+        ),
+        errorBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(TradingSizes.radiusSm),
+          borderSide: const BorderSide(color: TradingColors.error),
+        ),
+        focusedErrorBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(TradingSizes.radiusSm),
+          borderSide: const BorderSide(color: TradingColors.error, width: 2),
+        ),
+        contentPadding: const EdgeInsets.symmetric(
+          horizontal: TradingSizes.md,
+          vertical: TradingSizes.md,
+        ),
+        hintStyle: TradingTextStyles.bodyMedium(
+          color: TradingColors.textTertiary,
+        ),
+        labelStyle: TradingTextStyles.labelMedium(
+          color: TradingColors.lightText,
+        ),
+      ),
+
+      // Bottom Navigation Bar Theme for Light Mode
+      bottomNavigationBarTheme: const BottomNavigationBarThemeData(
+        backgroundColor: TradingColors.lightSurface,
+        selectedItemColor: TradingColors.primary,
+        unselectedItemColor: TradingColors.textTertiary,
+        type: BottomNavigationBarType.fixed,
+        elevation: 8,
+      ),
+
+      // Floating Action Button Theme for Light Mode
+      floatingActionButtonTheme: const FloatingActionButtonThemeData(
+        backgroundColor: TradingColors.primary,
+        foregroundColor: Colors.white,
+        elevation: 4,
+      ),
+
+      // Divider Theme for Light Mode
+      dividerTheme: const DividerThemeData(
+        color: TradingColors.border,
+        thickness: 1,
+        space: 1,
+      ),
+
+      // Icon Theme for Light Mode
+      iconTheme: const IconThemeData(
+        color: TradingColors.lightText,
+        size: TradingSizes.iconMd,
+      ),
+
       // Text Theme for Light Mode
       textTheme: TextTheme(
         displayLarge: TradingTextStyles.displayLarge(

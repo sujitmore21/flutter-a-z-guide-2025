@@ -29,9 +29,9 @@ class OrderBook extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-        color: TradingColors.surface,
+        color: Theme.of(context).cardColor,
         borderRadius: BorderRadius.circular(TradingSizes.radiusMd),
-        border: Border.all(color: TradingColors.border),
+        border: Border.all(color: Theme.of(context).dividerColor),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -49,12 +49,16 @@ class OrderBook extends StatelessWidget {
   Widget _buildHeader(BuildContext context) {
     return Container(
       padding: const EdgeInsets.all(TradingSizes.md),
-      decoration: const BoxDecoration(
-        border: Border(bottom: BorderSide(color: TradingColors.border)),
+      decoration: BoxDecoration(
+        border: Border(
+          bottom: BorderSide(color: Theme.of(context).dividerColor),
+        ),
       ),
       child: Row(
         children: [
-          Flexible(child: Text(title, style: TradingTextStyles.titleMedium())),
+          Flexible(
+            child: Text(title, style: Theme.of(context).textTheme.titleMedium),
+          ),
           const Spacer(),
           Flexible(child: _buildSpread()),
         ],
@@ -72,18 +76,25 @@ class OrderBook extends StatelessWidget {
     final spread = bestAsk - bestBid;
     final spreadPercent = (spread / bestBid) * 100;
 
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.end,
-      children: [
-        Text(
-          'Spread: \$${spread.toStringAsFixed(2)}',
-          style: TradingTextStyles.bodySmall(),
-        ),
-        Text(
-          '${spreadPercent.toStringAsFixed(2)}%',
-          style: TradingTextStyles.caption(),
-        ),
-      ],
+    return Builder(
+      builder: (context) => Column(
+        crossAxisAlignment: CrossAxisAlignment.end,
+        children: [
+          Text(
+            'Spread: \$${spread.toStringAsFixed(2)}',
+            style: Theme.of(context).textTheme.bodySmall?.copyWith(
+              color: Theme.of(context).colorScheme.onSurface.withOpacity(0.7),
+              fontWeight: FontWeight.w500,
+            ),
+          ),
+          Text(
+            '${spreadPercent.toStringAsFixed(2)}%',
+            style: Theme.of(context).textTheme.bodySmall?.copyWith(
+              color: Theme.of(context).colorScheme.onSurface.withOpacity(0.6),
+            ),
+          ),
+        ],
+      ),
     );
   }
 
@@ -189,49 +200,58 @@ class OrderBook extends StatelessWidget {
 
     return InkWell(
       onTap: () => onOrderTap?.call(order),
-      child: Container(
-        padding: const EdgeInsets.symmetric(
-          horizontal: TradingSizes.sm,
-          vertical: TradingSizes.xs,
-        ),
-        decoration: BoxDecoration(
-          color: isBuySide
-              ? TradingColors.profit.withOpacity(depth * 0.1)
-              : TradingColors.loss.withOpacity(depth * 0.1),
-        ),
-        child: Row(
-          children: [
-            // Price
-            Expanded(
-              child: Text(
-                '\$${order.price.toStringAsFixed(2)}',
-                style: TradingTextStyles.caption(
-                  color: isBuySide ? TradingColors.profit : TradingColors.loss,
+      child: Builder(
+        builder: (context) => Container(
+          padding: const EdgeInsets.symmetric(
+            horizontal: TradingSizes.sm,
+            vertical: TradingSizes.xs,
+          ),
+          decoration: BoxDecoration(
+            color: isBuySide
+                ? TradingColors.profit.withOpacity(depth * 0.1)
+                : TradingColors.loss.withOpacity(depth * 0.1),
+          ),
+          child: Row(
+            children: [
+              // Price
+              Expanded(
+                child: Text(
+                  '\$${order.price.toStringAsFixed(2)}',
+                  style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                    color: isBuySide ? Colors.green : Colors.red,
+                    fontWeight: FontWeight.w600,
+                  ),
+                  overflow: TextOverflow.ellipsis,
                 ),
-                overflow: TextOverflow.ellipsis,
               ),
-            ),
-            // Size
-            Expanded(
-              child: Text(
-                order.size.toStringAsFixed(2),
-                style: TradingTextStyles.caption(),
-                textAlign: TextAlign.center,
-                overflow: TextOverflow.ellipsis,
-              ),
-            ),
-            // Total
-            Expanded(
-              child: Text(
-                '\$${totalValue.toStringAsFixed(0)}',
-                style: TradingTextStyles.caption(
-                  color: TradingColors.textTertiary,
+              // Size
+              Expanded(
+                child: Text(
+                  order.size.toStringAsFixed(2),
+                  style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                    color: Theme.of(
+                      context,
+                    ).colorScheme.onSurface.withOpacity(0.8),
+                  ),
+                  textAlign: TextAlign.center,
+                  overflow: TextOverflow.ellipsis,
                 ),
-                textAlign: TextAlign.end,
-                overflow: TextOverflow.ellipsis,
               ),
-            ),
-          ],
+              // Total
+              Expanded(
+                child: Text(
+                  '\$${totalValue.toStringAsFixed(0)}',
+                  style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                    color: Theme.of(
+                      context,
+                    ).colorScheme.onSurface.withOpacity(0.6),
+                  ),
+                  textAlign: TextAlign.end,
+                  overflow: TextOverflow.ellipsis,
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );
