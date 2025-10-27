@@ -395,7 +395,12 @@ class EcommerceExamples extends StatelessWidget {
   }
 
   Widget _buildCheckoutExamples() {
-    return const SingleChildScrollView(child: CheckoutForm());
+    return const SingleChildScrollView(
+      child: SizedBox(
+        height: 1000, // Fixed height to prevent unbounded constraints
+        child: CheckoutForm(),
+      ),
+    );
   }
 }
 

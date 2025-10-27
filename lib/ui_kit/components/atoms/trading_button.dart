@@ -33,11 +33,16 @@ class TradingButton extends StatelessWidget {
   Widget build(BuildContext context) {
     final isDisabled = disabled || onPressed == null || isLoading;
 
-    return SizedBox(
-      width: isFullWidth ? double.infinity : null,
+    Widget button = SizedBox(
       height: _getHeight(),
       child: _buildButton(isDisabled),
     );
+
+    if (isFullWidth) {
+      return SizedBox(width: double.infinity, child: button);
+    }
+
+    return button;
   }
 
   Widget _buildButton(bool isDisabled) {
@@ -93,26 +98,32 @@ class TradingButton extends StatelessWidget {
       );
     }
 
-    final textWidget = Text(text, style: _getTextStyle());
+    final textWidget = Text(
+      text,
+      style: _getTextStyle(),
+      overflow: TextOverflow.ellipsis,
+      maxLines: 1,
+      textAlign: TextAlign.center,
+    );
 
     if (icon == null) {
-      return textWidget;
+      return Center(child: textWidget);
     }
 
     if (iconPosition == TradingButtonIconPosition.left) {
       return Row(
-        mainAxisSize: MainAxisSize.min,
+        mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Icon(icon, size: _getIconSize()),
           const SizedBox(width: TradingSizes.sm),
-          Flexible(child: textWidget),
+          Expanded(child: textWidget),
         ],
       );
     } else {
       return Row(
-        mainAxisSize: MainAxisSize.min,
+        mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Flexible(child: textWidget),
+          Expanded(child: textWidget),
           const SizedBox(width: TradingSizes.sm),
           Icon(icon, size: _getIconSize()),
         ],

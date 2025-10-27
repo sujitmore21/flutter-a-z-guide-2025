@@ -35,6 +35,7 @@ class OrderBook extends StatelessWidget {
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisSize: MainAxisSize.min,
         children: [
           if (showHeaders) _buildHeader(context),
           if (isLoading)
@@ -135,6 +136,7 @@ class OrderBook extends StatelessWidget {
     required bool isBuySide,
   }) {
     return Column(
+      mainAxisSize: MainAxisSize.min,
       children: [
         // Header
         Container(
@@ -148,7 +150,6 @@ class OrderBook extends StatelessWidget {
                 : TradingColors.loss.withOpacity(0.1),
           ),
           child: Row(
-            mainAxisSize: MainAxisSize.min,
             children: [
               Expanded(
                 child: Text(
@@ -182,13 +183,24 @@ class OrderBook extends StatelessWidget {
         ),
         // Orders
         Expanded(
-          child: ListView.builder(
-            itemCount: orders.length,
-            itemBuilder: (context, index) {
-              final order = orders[index];
-              return _buildOrderRow(order, isBuySide);
-            },
-          ),
+          child: orders.isEmpty
+              ? Center(
+                  child: Padding(
+                    padding: const EdgeInsets.all(TradingSizes.md),
+                    child: Text(
+                      'No orders',
+                      style: TradingTextStyles.bodySmall(),
+                    ),
+                  ),
+                )
+              : ListView.builder(
+                  itemCount: orders.length,
+                  physics: const ClampingScrollPhysics(),
+                  itemBuilder: (context, index) {
+                    final order = orders[index];
+                    return _buildOrderRow(order, isBuySide);
+                  },
+                ),
         ),
       ],
     );
